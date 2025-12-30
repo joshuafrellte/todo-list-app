@@ -10,13 +10,13 @@ function ToDoList() {
     }
 
     function addTask() {
-        
+        setTasks([...tasks, newTask])
     }
 
     return (
         <div className="flex flex-col items-center gap-3">
             <h1>Todo List</h1>
-            <div className="bg-blue-300">
+            <div className="bg-blue-300 p-2">
                 <input 
                     type='text'
                     placeholder='Enter a task...'
@@ -31,7 +31,7 @@ function ToDoList() {
                 </button>
             </div>
             
-            <ol>
+            <ol className="flex flex-col gap-2">
                 {tasks.map((task, index) => 
                     <li key={index}>
                         <TaskCard task={task}/>

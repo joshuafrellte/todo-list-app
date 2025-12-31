@@ -1,17 +1,28 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import TaskCard from "./components/TaskCard"
 import { IoMdAddCircle } from "react-icons/io"
 
 function ToDoList() {
-    const [tasks, setTasks] = useState<string[]>([
-        "Play 7 Days To Die", 
-        "Finish this todo list app bro", 
-        "Hello Motherfucker", 
-        "Student Research Portal", 
-        "Monster Hunter: Rise Almudron", 
-        "hello"
-    ])
+    const [tasks, setTasks] = useState<string[]>(() => {
+        const savedTasks = localStorage.getItem('tasks')
+        return savedTasks ? JSON.parse(savedTasks) : []
+    })
     const [newTask, setNewTask] = useState<string>("")
+
+    // "Play 7 Days To Die", 
+    // "Finish this todo list app bro", 
+    // "Hello Motherfucker", 
+    // "Student Research Portal", 
+    // "Monster Hunter: Rise Almudron", 
+    // "hello"
+
+    useEffect(() => {
+        localStorage.setItem('tasks', JSON.stringify(tasks))
+    }, [tasks])
+
+    useEffect(() => {
+
+    }, [])
 
     function handleInputChange(event) {
         setNewTask(event.target.value)
@@ -22,12 +33,10 @@ function ToDoList() {
             alert("empty ahh")
             return
         }
-
         if (tasks.includes(newTask)) {
             alert("nasulat na nmo ni bro")
             return
         }
-
         setTasks([...tasks, newTask])
     }
 

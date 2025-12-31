@@ -2,7 +2,7 @@ import { useState } from 'react'
 import TaskCard from "./components/TaskCard"
 
 function ToDoList() {
-    const [tasks, setTasks] = useState(["Finish this todo app", "Play Monster Hunter: Rise", "Study more ReactJS", "Hello World"])
+    const [tasks, setTasks] = useState(["Play 7 Days To Die", "Finish this todo list app bro", "Hello Motherfucker"])
     const [newTask, setNewTask] = useState("")
 
     function handleInputChange(event) {
@@ -13,30 +13,43 @@ function ToDoList() {
         setTasks([...tasks, newTask])
     }
 
+    function deleteTask(index) {
+        const updatedList = tasks.filter((_, i) => i !== index)
+        setTasks(updatedList)
+    }
+
     return (
         <div className="flex flex-col items-center gap-3">
-            <h1>Todo List</h1>
-            <div className="bg-blue-300 p-2">
-                <input 
-                    type='text'
-                    placeholder='Enter a task...'
+            <h1>To Do List</h1>
+            <div>
+                <input
+                    type="text"
+                    placeholder="Enter a task..."
                     value={newTask}
                     onChange={handleInputChange}
                 />
-                <button 
-                    onClick={addTask} 
-                    className="px-2 cursor-pointer"
+                <button
+                    onClick={addTask}
+                    className="cursor-pointer"
                 >
                     +
                 </button>
             </div>
-            
-            <ol className="flex flex-col gap-2">
-                {tasks.map((task, index) => 
-                    <li key={index}>
-                        <TaskCard task={task}/>
+            <ol>
+                {tasks.map((task, index) => (
+                    <li 
+                        key={index}
+                        className="flex justify-between gap-6"
+                    >
+                        <span>{task}</span>
+                        <button
+                            onClick={() => deleteTask(index)}
+                            className="cursor-pointer"
+                        >
+                            X
+                        </button>
                     </li>
-                )}
+                ))}
             </ol>
             
         </div>

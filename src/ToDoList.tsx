@@ -9,13 +9,6 @@ function ToDoList() {
     })
     const [newTask, setNewTask] = useState<string>("")
 
-    // "Play 7 Days To Die", 
-    // "Finish this todo list app bro", 
-    // "Hello Motherfucker", 
-    // "Student Research Portal", 
-    // "Monster Hunter: Rise Almudron", 
-    // "hello"
-
     useEffect(() => {
         localStorage.setItem('tasks', JSON.stringify(tasks))
     }, [tasks])
@@ -38,6 +31,7 @@ function ToDoList() {
             return
         }
         setTasks([...tasks, newTask])
+        setNewTask("")
     }
 
     function deleteTask(index) {
@@ -69,17 +63,18 @@ function ToDoList() {
 
     return (
         <div className="flex flex-col items-center gap-3">
-            <h1>To Do List</h1>
-            <div className="flex items-center border-2">
+            <h1 className="text-3xl uppercase font-bold tracking-wide mt-8 mb-1">To Do List</h1>
+            <div className="flex justify-between items-center w-[350px] mb-1 border-1 rounded-sm">
                 <input
                     type="text"
                     placeholder="Enter a task..."
                     value={newTask}
                     onChange={handleInputChange}
+                    className="w-[310px] pl-3 pt-2 pb-2 outline-0"
                 />
                 <button
                     onClick={addTask}
-                    className="cursor-pointer"
+                    className="text-2xl pr-2 cursor-pointer"
                 >
                     <IoMdAddCircle />
                 </button>

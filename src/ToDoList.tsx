@@ -1,21 +1,46 @@
 import { useState } from 'react'
 import TaskCard from "./components/TaskCard"
+import { IoMdAddCircle } from "react-icons/io"
 
 function ToDoList() {
-    const [tasks, setTasks] = useState(["Play 7 Days To Die", "Finish this todo list app bro", "Hello Motherfucker"])
-    const [newTask, setNewTask] = useState("")
+    const [tasks, setTasks] = useState<string[]>(["Play 7 Days To Die", "Finish this todo list app bro", "Hello Motherfucker"])
+    const [newTask, setNewTask] = useState<string>("")
 
     function handleInputChange(event) {
         setNewTask(event.target.value)
+        console.log(newTask)
     }
 
     function addTask() {
-        setTasks([...tasks, newTask])
+        if (newTask) {
+            setTasks([...tasks, newTask])
+        } else if (tasks.includes(newTask)) {
+            alert("nasulat na nmo ni bro")
+        } else {
+            alert("blaj")
+        }
+        
     }
 
     function deleteTask(index) {
         const updatedList = tasks.filter((_, i) => i !== index)
         setTasks(updatedList)
+    }
+
+    function moveTaskUp(index) {
+        if (index > 0) {
+            const updatedList = [...tasks];
+            [updatedList[index], updatedList[index - 1]] = [updatedList[index - 1], updatedList[index]]
+            setTasks(updatedList)
+        }
+    }
+
+    function moveTaskDown(index) {
+        if (index < tasks.length-1) {
+            const updatedList = [...tasks];
+            [updatedList[index], updatedList[index + 1]] = [updatedList[index + 1], updatedList[index]]
+            setTasks(updatedList)
+        }
     }
 
     return (
@@ -32,7 +57,7 @@ function ToDoList() {
                     onClick={addTask}
                     className="cursor-pointer"
                 >
-                    +
+                    <IoMdAddCircle />
                 </button>
             </div>
             <ol>
@@ -41,13 +66,12 @@ function ToDoList() {
                         key={index}
                         className="flex justify-between gap-6"
                     >
-                        <span>{task}</span>
-                        <button
-                            onClick={() => deleteTask(index)}
-                            className="cursor-pointer"
-                        >
-                            X
-                        </button>
+                        <TaskCard 
+                            task={task} 
+                            onDelete={() => deleteTask(index)}
+                            moveUp={() => moveTaskUp(index)}
+                            moveDown={() => moveTaskDown(index)}
+                        />
                     </li>
                 ))}
             </ol>

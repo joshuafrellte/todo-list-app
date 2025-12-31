@@ -3,23 +3,32 @@ import TaskCard from "./components/TaskCard"
 import { IoMdAddCircle } from "react-icons/io"
 
 function ToDoList() {
-    const [tasks, setTasks] = useState<string[]>(["Play 7 Days To Die", "Finish this todo list app bro", "Hello Motherfucker"])
+    const [tasks, setTasks] = useState<string[]>([
+        "Play 7 Days To Die", 
+        "Finish this todo list app bro", 
+        "Hello Motherfucker", 
+        "Student Research Portal", 
+        "Monster Hunter: Rise Almudron", 
+        "hello"
+    ])
     const [newTask, setNewTask] = useState<string>("")
 
     function handleInputChange(event) {
         setNewTask(event.target.value)
-        console.log(newTask)
     }
 
     function addTask() {
-        if (newTask) {
-            setTasks([...tasks, newTask])
-        } else if (tasks.includes(newTask)) {
-            alert("nasulat na nmo ni bro")
-        } else {
-            alert("blaj")
+        if (!newTask) {
+            alert("empty ahh")
+            return
         }
-        
+
+        if (tasks.includes(newTask)) {
+            alert("nasulat na nmo ni bro")
+            return
+        }
+
+        setTasks([...tasks, newTask])
     }
 
     function deleteTask(index) {
@@ -43,10 +52,16 @@ function ToDoList() {
         }
     }
 
+    function editTask(index) {
+        // click edit to show in field
+        setNewTask(tasks[index])
+        // setTasks(tasks.splice(index, 1, newTask))
+    }
+
     return (
         <div className="flex flex-col items-center gap-3">
             <h1>To Do List</h1>
-            <div>
+            <div className="flex items-center border-2">
                 <input
                     type="text"
                     placeholder="Enter a task..."
@@ -60,15 +75,13 @@ function ToDoList() {
                     <IoMdAddCircle />
                 </button>
             </div>
-            <ol>
+            <ol className="flex flex-col gap-2">
                 {tasks.map((task, index) => (
-                    <li 
-                        key={index}
-                        className="flex justify-between gap-6"
-                    >
+                    <li key={index}>
                         <TaskCard 
                             task={task} 
                             onDelete={() => deleteTask(index)}
+                            edit={() => editTask(index)}
                             moveUp={() => moveTaskUp(index)}
                             moveDown={() => moveTaskDown(index)}
                         />

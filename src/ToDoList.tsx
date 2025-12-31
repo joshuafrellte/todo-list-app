@@ -64,7 +64,7 @@ function ToDoList() {
     return (
         <div className="flex flex-col items-center gap-3">
             <h1 className="text-3xl uppercase font-bold tracking-wide mt-8 mb-1">To Do List</h1>
-            <div className="flex justify-between items-center w-[350px] mb-1 border-1 rounded-sm">
+            <div className="flex justify-between items-center w-[350px] sm:w-[500px] mb-1 border-1 rounded-sm">
                 <input
                     type="text"
                     placeholder="Enter a task..."
